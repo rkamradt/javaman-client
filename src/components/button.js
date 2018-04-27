@@ -1,12 +1,13 @@
-var React = require('react');
-var createReactClass = require('create-react-class');
+import React from 'react';
 
-module.exports = createReactClass({displayName: "Button",
-  render: function() {
+class Button extends React.Component {
+  render() {
     return (
-      React.createElement("button", {id: this.props.buttonId, type: "button", className: "btn btn-default"},
-        React.createElement("span", {className: "glyphicon glyphicon-" + this.props.iconName})
-      )
+      <button id={this.props.buttonId} type='button' className='btn btn-default'>
+        <span className={"glyphicon glyphicon-" + this.props.iconName} />
+      </button>
     );
   }
-});
+}
+
+export default Button

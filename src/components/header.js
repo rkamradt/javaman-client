@@ -1,14 +1,13 @@
-var React = require('react');
-var createReactClass = require('create-react-class');
+import React from 'react';
 
-module.exports = createReactClass({displayName: "Header",
-  render: function() {
+class Header extends React.Component {
+  render() {
     return (
-      React.createElement("div", {className: "header clearfix"},
-        React.createElement("h3", {className: "text-muted"},
-          "Java Man"
-        )
-      )
+      <div className='header clearfix'>
+        <h3 className='text-muted'>Java Man</h3>
+      </div>
     );
   }
-});
+}
+
+export default Header

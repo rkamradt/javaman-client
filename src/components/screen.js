@@ -1,29 +1,30 @@
-var React = require('react');
-var TopDirectionRow = require('./topdirrow');
-var MiddleDirectionRow = require('./middirrow');
-var BottomDirectionRow = require('./botdirrow');
-var ActionRow = require('./actionrow');
-var Header = require('./header');
-var Logon = require('./logon');
-var createReactClass = require('create-react-class');
+import React from 'react';
+import TopDirectionRow from './topdirrow';
+import MiddleDirectionRow from './middirrow';
+import BottomDirectionRow from './botdirrow';
+import ActionRow from './actionrow';
+import Header from './header';
+import Logon from './logon';
 
-module.exports = createReactClass({displayName: "Screen",
-  render: function() {
-    return (
-      React.createElement("div", {},
-        React.createElement("div", {className: "container"},
-          React.createElement(Header, {}),
-          React.createElement(Logon, {onCommentSubmit: this.props.handleLogonSubmit}),
-          React.createElement('canvas', {id: 'canvas', width: '240', height: '240'}),
-          React.createElement('img', {id: 'squares', hidden: true, src: 'img/squares.png'})
-        ),
-        React.createElement("div", {className: "container"},
-          React.createElement(TopDirectionRow, {}),
-          React.createElement(MiddleDirectionRow, {}),
-          React.createElement(BottomDirectionRow, {}),
-          React.createElement(ActionRow, {})
-        )
-      )
+class Screen extends React.Component {
+  render() {
+    return(
+      <div>
+        <div className='container'>
+          <Header />
+          <Logon onLogonSubmit={this.props.handleLogonSubmit} />
+          <canvas id='canvas' width='240' height='240' />
+          <img id='squares' hidden='true' src='img/squares.png' alt=''/>
+        </div>
+        <div className='container'>
+          <TopDirectionRow />
+          <MiddleDirectionRow />
+          <BottomDirectionRow />
+          <ActionRow />
+        </div>
+      </div>
     );
   }
-});
+}
+
+export default Screen

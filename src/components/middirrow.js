@@ -1,17 +1,20 @@
-var React = require('react');
-var Button = require('./button.js');
-var createReactClass = require('create-react-class');
+import React from 'react';
+import Button from './button.js';
 
-module.exports = createReactClass({displayName: "MiddleDirectionRow",
-  render: function() {
+class MiddleDirectionRow extends React.Component {
+  render() {
     return (
-      React.createElement("div", {className: "row"},
-        React.createElement("div", {className: "col-sm-4"},
-          React.createElement(Button, {buttonId: 'leftbutton', iconName: 'chevron-left'})),
-        React.createElement("div", {className: "col-sm-4"}, ' '),
-        React.createElement("div", {className: "col-sm-4"},
-          React.createElement(Button, {buttonId: 'rightbutton', iconName: 'chevron-right'}))
-      )
+      <div className='row'>
+        <div className='col-sm-4'>
+          <Button buttonId='leftbutton' iconName='chevron-left' />
+        </div>
+        <div className='col-sm-4'> </div>
+        <div className='col-sm-4'>
+          <Button buttonId='rightbutton' iconName='chevron-right' />
+        </div>
+      </div>
     );
   }
-});
+}
+
+export default MiddleDirectionRow

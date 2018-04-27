@@ -1,16 +1,18 @@
-var React = require('react');
-var Button = require('./button.js');
-var createReactClass = require('create-react-class');
+import React from 'react';
+import Button from './button.js';
 
-module.exports = createReactClass({displayName: "BottomDirectionRow",
-  render: function() {
+class BottomDirectionRow extends React.Component {
+  render() {
     return (
-      React.createElement("div", {className: "row"},
-        React.createElement("div", {className: "col-sm-4"}, ' '),
-        React.createElement("div", {className: "col-sm-4"},
-          React.createElement(Button, {buttonId: 'downbutton', iconName: 'chevron-down'})),
-        React.createElement("div", {className: "col-sm-4"}, ' ')
-      )
+      <div className='row'>
+        <div className='col-sm-4'> </div>
+        <div className='col-sm-4'>
+          <Button buttonId='downbutton' iconName='chevron-down' />
+        </div>
+        <div className='col-sm-4'> </div>
+      </div>
     );
   }
-});
+}
+
+export default BottomDirectionRow

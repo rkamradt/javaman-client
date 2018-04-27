@@ -1,39 +1,27 @@
-var React = require('react');
-var createReactClass = require('create-react-class');
+import React from 'react';
 
-module.exports = createReactClass({displayName: "Logon",
-  handleSubmit: function(e) {
+class Logon extends React.Component {
+  handleSubmit(e) {
     e.preventDefault();
     var email = this.refs.email.value.trim();
     var password = this.refs.password.value.trim();
     if (!email) {
       return;
     }
-    this.props.onCommentSubmit({email: email, password: password});
-  },
-  render: function() {
+    this.props.onLogonSubmit({email: email, password: password});
+  }
+  render() {
     return (
-      React.createElement("form", {id: 'logon', className: "form-signin", onSubmit: this.handleSubmit},
-        React.createElement('h2', {className: 'form-signin-heading'}, 'Please sign in' ),
-        React.createElement("label", {htmlFor: 'inputEmail', className: 'sr-only'}, "Email address"),
-        React.createElement("input", {type: 'email',
-                                      id: 'inputEmail',
-                                      ref: 'email',
-                                      className: 'form-control',
-                                      placeholder: 'Email address',
-                                      required: true,
-                                      autoFocus: true
-                                      }),
-        React.createElement("label", {htmlFor: 'inputPassword', className: 'sr-only'}, "Password"),
-        React.createElement("input", {type: 'password',
-                                      id: 'inputPassword',
-                                      ref: 'password',
-                                      className: 'form-control',
-                                      placeholder: 'Password',
-                                      required: true
-                                      }),
-        React.createElement("button", {type:'submit', className: 'btn btn-lg btn-primary btn-block'}, "Sign in")
-      )
+      <form id='logon' className='form-signin' onSubmit={this.handleSubmit}>
+        <h2 className='form-signin-heading'>Please sign in</h2>
+        <label htmlFor='inputEmail' className='sr-only'>Email address</label>
+        <input type='email' id='inputEmail' ref='email' className='form-control' placeholder='Email address' required='true' autoFocus='true' />
+        <label htmlFor='inputPassword' className='sr-only'>Password</label>
+        <input type='password' id='inputPassword' ref='password' className='form-control' required='true' />
+        <button type='submit' className='btn btn-lg btn-primary btn-block'>Sign in</button>
+      </form>
     );
   }
-});
+}
+
+export default Logon
