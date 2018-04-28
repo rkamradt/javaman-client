@@ -12,7 +12,7 @@ module.exports = function(controller) {
   var errorCount = 0; // used to stop after so main server failures
   return {
     'createWorld': function() {
-      fetch('https://api.rlksr.com/world', {
+      fetch('http://localhost:9999/world', {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, same-origin, *omit
         headers: {
@@ -20,11 +20,12 @@ module.exports = function(controller) {
           'content-type': 'application/json'
         },
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, cors, *same-origin
+        mode: 'no-cors', // no-cors, cors, *same-origin
         redirect: 'follow', // manual, *follow, error
-        referrer: 'no-referrer', // *client, no-referrer
+        referrer: 'no-referrer' // *client, no-referrer
       })
       .then(function(response) {
+        console.log(response);
         return response.json();
       })
       .then(function(myJson) {
@@ -36,7 +37,7 @@ module.exports = function(controller) {
       if(command) {
         url += '/' + command;
       }
-      fetch('https://api.rlksr.com/'+url, {
+      fetch('http://localhost:9999/'+url, {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, same-origin, *omit
         headers: {
@@ -44,9 +45,9 @@ module.exports = function(controller) {
           'content-type': 'application/json'
         },
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, cors, *same-origin
+        mode: 'no-cors', // no-cors, cors, *same-origin
         redirect: 'follow', // manual, *follow, error
-        referrer: 'no-referrer', // *client, no-referrer
+        referrer: 'no-referrer' // *client, no-referrer
       })
       .then(function(response) {
         return response.json();
@@ -57,7 +58,7 @@ module.exports = function(controller) {
       });
     },
     'reset': function() {
-      fetch('https://api.rlksr.com/world/reset', {
+      fetch('http://localhost:9999/world/reset', {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, same-origin, *omit
         headers: {
@@ -65,9 +66,9 @@ module.exports = function(controller) {
           'content-type': 'application/json'
         },
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, cors, *same-origin
+        mode: 'no-cors', // no-cors, cors, *same-origin
         redirect: 'follow', // manual, *follow, error
-        referrer: 'no-referrer', // *client, no-referrer
+        referrer: 'no-referrer' // *client, no-referrer
       })
       .then(function(response) {
         return response.json();

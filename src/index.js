@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap-theme.css';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import soundsFactory from './sounds';
@@ -9,7 +8,7 @@ import controllerFactory from './controller';
 import Screen from './components/screen';
 
 var handleLogonSubmit = function(data) {
-  fetch('https://api.rlksr.com/logon', {
+  fetch('http://localhost:9999/logon', {
     body: JSON.stringify(data), // must match 'Content-Type' header
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
     credentials: 'same-origin', // include, same-origin, *omit
@@ -18,15 +17,12 @@ var handleLogonSubmit = function(data) {
       'content-type': 'application/json'
     },
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, cors, *same-origin
+    mode: 'no-cors', // no-cors, cors, *same-origin
     redirect: 'follow', // manual, *follow, error
-    referrer: 'no-referrer', // *client, no-referrer
+    referrer: 'no-referrer' // *client, no-referrer
   })
   .then(function(response) {
-    return response.json();
-  })
-  .then(function(myJson) {
-    console.log(myJson);
+    console.log(response);
     var sounds = soundsFactory(new (window.AudioContext || window.webkitAudioContext)());
     var canvas = document.getElementById('canvas');
     var logon = document.getElementById('logon');
@@ -37,7 +33,10 @@ var handleLogonSubmit = function(data) {
     var controller = controllerFactory(sounds, ctx, squares);
     controller.init();
   });
-}
+};
 
-ReactDOM.render(<Screen handleLogonSubmit={ handleLogonSubmit } />, document.getElementById('screen'));
+ReactDOM.render(
+  <Screen handleLogonSubmit={ handleLogonSubmit } />
+  , document.getElementById('screen'));
+
 registerServiceWorker();
