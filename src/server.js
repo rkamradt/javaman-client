@@ -19,18 +19,21 @@ module.exports = function(controller) {
           'user-agent': 'Mozilla/4.0 MDN Example',
           'content-type': 'application/json'
         },
-        method: 'GET', // *GET, POST, PUT, DELETE, etc.
-        mode: 'no-cors', // no-cors, cors, *same-origin
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, cors, *same-origin
         redirect: 'follow', // manual, *follow, error
         referrer: 'no-referrer' // *client, no-referrer
       })
       .then(function(response) {
-        console.log(response);
-        return response.json();
+        console.log("Headers: " + response.headers.get("Content-Type"));
+        var contentType = response.headers.get("Content-Type");
+        if(contentType && contentType.includes("application/json")) {
+          return response.json();
+        }
+        throw new TypeError("Oops, we haven't got JSON!");
       })
-      .then(function(myJson) {
-        controller.beginSuccess(myJson);
-      });
+      .catch(error => controller.error('error getting world from server', 'could not contact server'))
+      .then(json => controller.beginSuccess(json));
     },
     'sync': function(command) {
       var url = 'world/go';
@@ -44,8 +47,8 @@ module.exports = function(controller) {
           'user-agent': 'Mozilla/4.0 MDN Example',
           'content-type': 'application/json'
         },
-        method: 'GET', // *GET, POST, PUT, DELETE, etc.
-        mode: 'no-cors', // no-cors, cors, *same-origin
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, cors, *same-origin
         redirect: 'follow', // manual, *follow, error
         referrer: 'no-referrer' // *client, no-referrer
       })
@@ -65,8 +68,8 @@ module.exports = function(controller) {
           'user-agent': 'Mozilla/4.0 MDN Example',
           'content-type': 'application/json'
         },
-        method: 'GET', // *GET, POST, PUT, DELETE, etc.
-        mode: 'no-cors', // no-cors, cors, *same-origin
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, cors, *same-origin
         redirect: 'follow', // manual, *follow, error
         referrer: 'no-referrer' // *client, no-referrer
       })
