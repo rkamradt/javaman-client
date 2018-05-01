@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import soundsFactory from './sounds';
-import controllerFactory from './controller';
+import Controller from './controller';
 import Screen from './components/screen';
 
 var handleLogonSubmit = function(data) {
@@ -30,8 +30,7 @@ var handleLogonSubmit = function(data) {
     logon.style.display='none';
     canvas.style.display='block';
     var ctx = canvas.getContext('2d');
-    var controller = controllerFactory(sounds, ctx, squares);
-    controller.init();
+    var controller = new Controller(sounds, ctx, squares);
   });
 };
 
