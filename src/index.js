@@ -11,7 +11,7 @@ var handleLogonSubmit = function(data) {
   fetch('http://localhost:9999/logon', {
     body: JSON.stringify(data), // must match 'Content-Type' header
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: 'same-origin', // include, same-origin, *omit
+    credentials: 'include', // include, same-origin, *omit
     headers: {
       'user-agent': 'Mozilla/4.0 MDN Example',
       'content-type': 'application/json'
