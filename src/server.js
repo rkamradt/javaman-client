@@ -6,13 +6,12 @@
 export default class Server {
   constructor(controller) {
     this.controller = controller;
-    this.errorCount = 0;
   }
 
   createWorld() {
       fetch('http://localhost:9999/world', {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, same-origin, *omit
+        credentials: 'include', // include, same-origin, *omit
         headers: {
           'user-agent': 'Mozilla/4.0 MDN Example',
           'content-type': 'application/json'
@@ -25,14 +24,12 @@ export default class Server {
       .then(function(response) {
         const contentType = response.headers.get("Content-Type");
         if(contentType && contentType.includes("application/json")) {
-          this.errorCount = 0;
           return response.json();
         }
-        this.errorCount++;
         throw new TypeError("Oops, we haven't got JSON!");
       })
-      .catch(error => this.controller.error('error getting world from server', 'could not contact server'))
-      .then(json => this.controller.beginSuccess(json));
+      .then(json => this.controller.beginSuccess(json))
+      .catch(error => this.controller.error('error getting world from server error = ' + error, 'could not contact server'));
     }
     sync(command) {
       let url = 'world/go';
@@ -41,7 +38,7 @@ export default class Server {
       }
       fetch('http://localhost:9999/'+url, {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, same-origin, *omit
+        credentials: 'include', // include, same-origin, *omit
         headers: {
           'user-agent': 'Mozilla/4.0 MDN Example',
           'content-type': 'application/json'
@@ -54,19 +51,17 @@ export default class Server {
       .then(function(response) {
         var contentType = response.headers.get("Content-Type");
         if(contentType && contentType.includes("application/json")) {
-          this.errorCount = 0;
           return response.json();
         }
-        this.errorCount++;
         throw new TypeError("Oops, we haven't got JSON!");
       })
-      .catch(error => this.controller.error('error getting world from server', 'could not contact server'))
-      .then(json => this.controller.syncSuccess(json));
+      .then(json => this.controller.syncSuccess(json))
+      .catch(error => this.controller.error('error getting world from server error = ' + error, 'could not contact server'));
     }
     reset() {
       fetch('http://localhost:9999/world/reset', {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, same-origin, *omit
+        credentials: 'include', // include, same-origin, *omit
         headers: {
           'user-agent': 'Mozilla/4.0 MDN Example',
           'content-type': 'application/json'
@@ -79,13 +74,11 @@ export default class Server {
       .then(function(response) {
         var contentType = response.headers.get("Content-Type");
         if(contentType && contentType.includes("application/json")) {
-          this.errorCount = 0;
           return response.json();
         }
-        this.errorCount++;
         throw new TypeError("Oops, we haven't got JSON!");
       })
-      .catch(error => this.controller.error('error getting world from server', 'could not contact server'))
-      .then(json => this.controller.resetSuccess(json));
+      .then(json => this.controller.resetSuccess(json))
+      .catch(error => this.controller.error('error getting world from server error = ' + error, 'could not contact server'));
     }
 }

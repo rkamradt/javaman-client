@@ -6,8 +6,11 @@ import State from './state';
 import Server from './server';
 import Handler from './handler';
 
+var theController;
+
 export default class Controller {
   constructor(sounds, ctx, squares) {
+    theController = this;
     this.sounds = sounds;
     this.ctx = ctx;
     this.squares = squares;
@@ -155,14 +158,14 @@ export default class Controller {
     this.ticks++;
   }
   internalStep(timestamp) {
-    if(this.ticker) { // don't continue animating if the ticker is stoped
-      this.state.animate(this.ticks);
-      window.requestAnimationFrame(this.internalStep);
+    if(theController.ticker) { // don't continue animating if the ticker is stoped
+      theController.state.animate(theController.ticks);
+      window.requestAnimationFrame(theController.internalStep);
     }
   }
 
   internalTick() {
-    this.tick();
+    theController.tick();
   }
 
 }

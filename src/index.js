@@ -31,7 +31,8 @@ var handleLogonSubmit = function(data) {
     canvas.style.display='block';
     var ctx = canvas.getContext('2d');
     var controller = new Controller(sounds, ctx, squares);
-  });
+  })
+  .catch(error => this.controller.error('error logging on to server error = ' + error, 'could not contact server'));
 };
 
 ReactDOM.render(

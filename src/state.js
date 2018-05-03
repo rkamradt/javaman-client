@@ -73,17 +73,18 @@ export default class State {
       this.field.drawAt(user.cursorx, user.cursory, 4);
     });
   }
+  drawAnimation(user, tick) {
+    if(tick%SIZE === 0) {
+      this.field.drawFieldAt(user.previousx, user.previousy);
+      user.previousx = user.cursorx;
+      user.previousy = user.cursory;
+      this.field.drawAt(user.cursorx, user.cursory, 4);
+    } else {
+      this.field.drawInterim(user.previousx, user.previousy, user.cursorx, user.cursory, tick, 4);
+    }
+  }
   animate(tick) {
-    this.users.forEach(function(user) {
-      if(tick%SIZE === 0) {
-        this.field.drawFieldAt(user.previousx, user.previousy);
-        user.previousx = user.cursorx;
-        user.previousy = user.cursory;
-        this.field.drawAt(user.cursorx, user.cursory, 4);
-      } else {
-        this.field.drawInterim(user.previousx, user.previousy, user.cursorx, user.cursory, tick, 4);
-      }
-    });
+    this.users.forEach(user => this.drawAnimation(user, tick))
   }
 
  }
