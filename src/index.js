@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
-import registerServiceWorker from './registerServiceWorker';
 import soundsFactory from './sounds';
 import Controller from './controller';
 import Screen from './components/screen';
@@ -38,5 +37,3 @@ var handleLogonSubmit = function(data) {
 ReactDOM.render(
   <Screen handleLogonSubmit={ handleLogonSubmit } />
   , document.getElementById('screen'));
-
-registerServiceWorker();
