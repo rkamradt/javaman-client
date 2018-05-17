@@ -9,7 +9,7 @@ export default class Server {
   }
 
   createWorld() {
-      fetch('http://localhost:9999/world', {
+      fetch('https://api.rlksr.com/api/world', {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'include', // include, same-origin, *omit
         headers: {
@@ -36,7 +36,7 @@ export default class Server {
       if(command) {
         url += '/' + command;
       }
-      fetch('http://localhost:9999/'+url, {
+      fetch('https://api.rlksr.com/api/'+url, {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'include', // include, same-origin, *omit
         headers: {
@@ -59,7 +59,7 @@ export default class Server {
       .catch(error => this.controller.error('error getting world from server error = ' + error, 'could not contact server'));
     }
     reset() {
-      fetch('http://localhost:9999/world/reset', {
+      fetch('https://api.rlksr.com/api/world/reset', {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'include', // include, same-origin, *omit
         headers: {
