@@ -7,7 +7,7 @@ import Controller from './controller';
 import Screen from './components/screen';
 
 var handleLogonSubmit = function(data) {
-  fetch('https://api.rlksr.com/api/logon', {
+  fetch('api/logon', {
     body: JSON.stringify(data), // must match 'Content-Type' header
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
     credentials: 'include', // include, same-origin, *omit

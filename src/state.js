@@ -20,7 +20,6 @@ export default class State {
     this.maxy = 0;
   }
   setWorldState(data) {
-    console.log("in setWorldState uid = " + data.uid);
     this.field.setWorld(data.world);
     const max = this.field.getMax();
     this.maxx = max.x;
@@ -32,7 +31,6 @@ export default class State {
     this.field.setWorld(f);
   }
   setState(data) {
-    console.log("in setState uid = " + this.uid);
     for(var i = 0; i < data.users.length; i++) {
       if(!this.users[i]) {
         this.users[i] = {

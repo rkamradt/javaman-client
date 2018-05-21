@@ -7,7 +7,7 @@ const UP = 38;
 const RIGHT = 39;
 const DOWN = 40;
 
-export default class Controller {
+export default class Handler {
   constructor(controller) {
     this.controller = controller;
   }
@@ -26,19 +26,10 @@ export default class Controller {
     this.controller.actionStart(command);
   }
   bindButton(button, command) {
-    const self = this;
-    button.addEventListener("mousedown", function(event) {
-      self.actionStart(event, command);
-    });
-    button.addEventListener("touchstart", function(event) {
-      self.actionStart(event, command);
-    });
-    button.addEventListener("mouseup", function(event) {
-      self.actionEnd(event, command);
-    });
-    button.addEventListener("touchend", function(event) {
-      self.actionEnd(event, command);
-    });
+    button.addEventListener("mousedown", event => this.actionStart(event, command));
+    button.addEventListener("touchstart", event => this.actionStart(event, command));
+    button.addEventListener("mouseup", event => this.actionEnd(event, command));
+    button.addEventListener("touchend", event => this.actionEnd(event, command));
 
   }
   _xlateKey(key) {

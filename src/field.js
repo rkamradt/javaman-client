@@ -33,14 +33,14 @@ export default class Field {
     this.maxy = this.maxx > 0 ? f[0].length : 0;
   }
   ensureCentered(user) {
-    var minvbuf = Math.floor(this.viewsize/4);
-    var maxvbuf = Math.floor(this.viewsize*3/4);
-    var viewminx = this.viewx+(minvbuf);
-    var viewminy = this.viewy+(minvbuf);
-    var viewmaxx = this.viewx+(maxvbuf);
-    var viewmaxy = this.viewy+(maxvbuf);
-    var oldx = this.viewx;
-    var oldy = this.viewy;
+    const minvbuf = Math.floor(this.viewsize/4);
+    const maxvbuf = Math.floor(this.viewsize*3/4);
+    const viewminx = this.viewx+(minvbuf);
+    const viewminy = this.viewy+(minvbuf);
+    const viewmaxx = this.viewx+(maxvbuf);
+    const viewmaxy = this.viewy+(maxvbuf);
+    const oldx = this.viewx;
+    const oldy = this.viewy;
     if(user.cursorx < viewminx) {
       this.viewx -= viewminx-user.cursorx;
       if(this.viewx < 0) {
