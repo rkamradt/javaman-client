@@ -10,6 +10,7 @@ var theController
 
 export default class Controller {
   constructor(sounds, ctx, squares, accessToken) {
+    console.log('starting controller with accessToken ' + accessToken)
     theController = this
     this.sounds = sounds
     this.ctx = ctx
@@ -38,8 +39,8 @@ export default class Controller {
     this.server.createWorld()
   }
   start() {
-    this.ticker = window.setInterval(Controller.internalTick, 200)
-    window.requestAnimationFrame(Controller.internalStep) // start animation
+    this.ticker = window.setInterval(Controller.internalTick, 2000)
+//    window.requestAnimationFrame(Controller.internalStep) // start animation
   }
   stop() {
     window.clearInterval(this.ticker)
@@ -68,6 +69,9 @@ export default class Controller {
   error(logMessage, alertMessage) {
     if(logMessage) {
       console.log(logMessage)
+    }
+    if(alertMessage) {
+      console.log(alertMessage)
     }
   }
   actionStart(command) {
@@ -157,7 +161,7 @@ export default class Controller {
   static internalStep(timestamp) {
     if(theController.ticker) { // don't continue animating if the ticker is stopped
       theController.state.animate(theController.ticks)
-      window.requestAnimationFrame(Controller.internalStep)
+//      window.requestAnimationFrame(Controller.internalStep)
     }
   }
 

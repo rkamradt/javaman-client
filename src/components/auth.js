@@ -1,10 +1,15 @@
 import { useState, useEffect } from 'react';
-import { fetchUser } from './user.js'
+import { useController } from './init.js'
 
 export const useAuth = (auth) => {
   const [authenticated, setAuthenticated] = useState(null)
-  const [user, setUser] = useState(null)
   const [accessToken, setAccessToken] = useState(null)
+
+  const setAndReturnAccessToken = (accessToken) => {
+    console.log('setting accessToken ' + accessToken)
+    setAccessToken(accessToken)
+    return accessToken
+  }
 
   useEffect(() => {
     auth.isAuthenticated().then(isAuthenticated => {
@@ -16,16 +21,16 @@ export const useAuth = (auth) => {
 
   useEffect(() => {
     if (authenticated) {
-      setUser(null)
+      setAccessToken(null)
+      console.log('getting accessToken')
       auth.getAccessToken()
+        .then(setAndReturnAccessToken)
+        .then(useController)
         .then(setAccessToken)
-        .then(fetchUser)
-        .then(setUser)
     } else {
-      setUser(null);
       setAccessToken(null)
     }
   }, [authenticated, auth])
 
-  return [authenticated, user, accessToken];
+  return authenticated
 };

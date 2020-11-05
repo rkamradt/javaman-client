@@ -10,16 +10,15 @@ export default class Server {
   }
 
   createWorld() {
+      console.log('Authorization ' + `Bearer ${this.accessToken}`)
       fetch(process.env.REACT_APP_SERVER_URL + '/api/world', {
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'include', // include, same-origin, *omit
         headers: {
           'user-agent': 'Mozilla/4.0 MDN Example',
           'content-type': 'application/json',
-          'Authorization': `Bearer ${this.accessToken}`
+          authorization: `Bearer ${this.accessToken}`
         },
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'no-cors', // no-cors, cors, *same-origin
         redirect: 'follow', // manual, *follow, error
         referrer: 'no-referrer' // *client, no-referrer
       })
@@ -39,15 +38,13 @@ export default class Server {
         url += '/' + command
       }
       fetch(process.env.REACT_APP_SERVER_URL + '/api/'+url, {
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'include', // include, same-origin, *omit
         headers: {
           'user-agent': 'Mozilla/4.0 MDN Example',
           'content-type': 'application/json',
-          'Authorization': `Bearer ${this.accessToken}`
+          authorization: `Bearer ${this.accessToken}`
         },
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'no-cors', // no-cors, cors, *same-origin
         redirect: 'follow', // manual, *follow, error
         referrer: 'no-referrer' // *client, no-referrer
       })
@@ -63,15 +60,13 @@ export default class Server {
     }
     reset() {
       fetch(process.env.REACT_APP_SERVER_URL + '/api/world/reset', {
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'include', // include, same-origin, *omit
         headers: {
           'user-agent': 'Mozilla/4.0 MDN Example',
           'content-type': 'application/json',
-          'Authorization': `Bearer ${this.accessToken}`
+          authorization: `Bearer ${this.accessToken}`
         },
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'no-cors', // no-cors, cors, *same-origin
         redirect: 'follow', // manual, *follow, error
         referrer: 'no-referrer' // *client, no-referrer
       })
