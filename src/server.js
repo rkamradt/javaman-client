@@ -4,20 +4,22 @@
  */
 
 export default class Server {
-  constructor(controller) {
-    this.controller = controller;
+  constructor(controller, accessToken) {
+    this.controller = controller
+    this.accessToken = accessToken
   }
 
   createWorld() {
-      fetch('api/world', {
+      fetch(process.env.REACT_APP_SERVER_URL + '/api/world', {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'include', // include, same-origin, *omit
         headers: {
           'user-agent': 'Mozilla/4.0 MDN Example',
-          'content-type': 'application/json'
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${this.accessToken}`
         },
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, cors, *same-origin
+        mode: 'no-cors', // no-cors, cors, *same-origin
         redirect: 'follow', // manual, *follow, error
         referrer: 'no-referrer' // *client, no-referrer
       })
@@ -36,15 +38,16 @@ export default class Server {
       if(command) {
         url += '/' + command
       }
-      fetch('api/'+url, {
+      fetch(process.env.REACT_APP_SERVER_URL + '/api/'+url, {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'include', // include, same-origin, *omit
         headers: {
           'user-agent': 'Mozilla/4.0 MDN Example',
-          'content-type': 'application/json'
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${this.accessToken}`
         },
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, cors, *same-origin
+        mode: 'no-cors', // no-cors, cors, *same-origin
         redirect: 'follow', // manual, *follow, error
         referrer: 'no-referrer' // *client, no-referrer
       })
@@ -59,15 +62,16 @@ export default class Server {
       .catch(error => this.controller.error('error getting world from server error = ' + error, 'could not contact server'))
     }
     reset() {
-      fetch('api/world/reset', {
+      fetch(process.env.REACT_APP_SERVER_URL + '/api/world/reset', {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'include', // include, same-origin, *omit
         headers: {
           'user-agent': 'Mozilla/4.0 MDN Example',
-          'content-type': 'application/json'
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${this.accessToken}`
         },
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, cors, *same-origin
+        mode: 'no-cors', // no-cors, cors, *same-origin
         redirect: 'follow', // manual, *follow, error
         referrer: 'no-referrer' // *client, no-referrer
       })

@@ -4,6 +4,7 @@ import { fetchUser } from './user.js'
 export const useAuth = (auth) => {
   const [authenticated, setAuthenticated] = useState(null)
   const [user, setUser] = useState(null)
+  const [accessToken, setAccessToken] = useState(null)
 
   useEffect(() => {
     auth.isAuthenticated().then(isAuthenticated => {
@@ -17,12 +18,14 @@ export const useAuth = (auth) => {
     if (authenticated) {
       setUser(null)
       auth.getAccessToken()
+        .then(setAccessToken)
         .then(fetchUser)
         .then(setUser)
     } else {
       setUser(null);
+      setAccessToken(null)
     }
   }, [authenticated, auth])
 
-  return [authenticated, user];
+  return [authenticated, user, accessToken];
 };

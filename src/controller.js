@@ -9,13 +9,13 @@ import Handler from './handler'
 var theController
 
 export default class Controller {
-  constructor(sounds, ctx, squares) {
+  constructor(sounds, ctx, squares, accessToken) {
     theController = this
     this.sounds = sounds
     this.ctx = ctx
     this.squares = squares
     this.state = new State(sounds, ctx, squares, this)
-    this.server = new Server(this)
+    this.server = new Server(this, accessToken)
     this.handler = new Handler(this)
     var canvas = document.getElementById('canvas')
     canvas.addEventListener("keydown", this.keyDown)
@@ -38,7 +38,7 @@ export default class Controller {
     this.server.createWorld()
   }
   start() {
-    this.ticker = window.setInterval(Controller.internalTick, 20)
+    this.ticker = window.setInterval(Controller.internalTick, 200)
     window.requestAnimationFrame(Controller.internalStep) // start animation
   }
   stop() {
@@ -68,9 +68,6 @@ export default class Controller {
   error(logMessage, alertMessage) {
     if(logMessage) {
       console.log(logMessage)
-    }
-    if(alertMessage) {
-      window.alert(alertMessage)
     }
   }
   actionStart(command) {

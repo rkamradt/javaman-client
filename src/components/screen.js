@@ -9,8 +9,8 @@ import { useAuth } from './auth';
 import { useController } from './init';
 
 const Screen = withAuth(({ auth }) => {
-  const [authenticated, user] = useAuth(auth)
-  const [controller] = useController(user)
+  const [authenticated, user, accessToken] = useAuth(auth)
+  const [controller] = useController(accessToken)
   return (
     <div>
       <header>
@@ -22,7 +22,7 @@ const Screen = withAuth(({ auth }) => {
             Log {authenticated ? 'out' : 'in'}
           </button>
         )}
-        {user !== null && (
+        {accessToken !== null && (
           <div>
             <div className='container'>
               <Header />
