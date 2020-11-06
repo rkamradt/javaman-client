@@ -10,7 +10,6 @@ export default class Server {
   }
 
   createWorld() {
-      console.log('Authorization ' + `Bearer ${this.accessToken}`)
       fetch(process.env.REACT_APP_SERVER_URL + '/api/world', {
         headers: {
           'user-agent': 'Mozilla/4.0 MDN Example',

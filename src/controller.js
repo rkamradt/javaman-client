@@ -40,7 +40,7 @@ export default class Controller {
   }
   start() {
     this.ticker = window.setInterval(Controller.internalTick, 2000)
-//    window.requestAnimationFrame(Controller.internalStep) // start animation
+    window.requestAnimationFrame(Controller.internalStep) // start animation
   }
   stop() {
     window.clearInterval(this.ticker)
@@ -161,7 +161,7 @@ export default class Controller {
   static internalStep(timestamp) {
     if(theController.ticker) { // don't continue animating if the ticker is stopped
       theController.state.animate(theController.ticks)
-//      window.requestAnimationFrame(Controller.internalStep)
+      window.requestAnimationFrame(Controller.internalStep)
     }
   }
 
