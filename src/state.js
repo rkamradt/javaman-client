@@ -9,82 +9,85 @@ import Field from './field';
 
 export default class State {
   constructor(sound, ctx, squares, controller) {
-    this.sound = sound;
-    this.ctx = ctx;
     this.squares = squares;
     this.controller = controller;
-    this.users = [];
-    this.uid = -1;
     this.field = new Field(ctx, VIEWSIZE, SIZE, squares);
     this.maxx = 0;
     this.maxy = 0;
+    this.users = {};
   }
   setWorldState(data) {
     this.field.setWorld(data.world);
+    this.users = data.users;
     const max = this.field.getMax();
     this.maxx = max.x;
     this.maxy = max.y;
     this.field.drawField();
-    this.uid = data.uid;
   }
   setWorld(f) {
     this.field.setWorld(f);
   }
   setState(data) {
-    for(var i = 0; i < data.users.length; i++) {
-      if(!this.users[i]) {
-        this.users[i] = {
-          cursorx: 0,
-          previousx: 0,
-          cursory: 0,
-          previousy: 0
-        };
-      }
-      this.users[i].cursorx = data.users[i].cursorx;
-      this.users[i].cursory = data.users[i].cursory;
-    }
-    const user = this.users[this.uid];
-    if(user.previousx !== user.cursorx ||
-        user.previousy !== user.cursory) {
-      this.field.ensureCentered(this.users[this.uid]);
-    }
-    if(Math.abs(user.previousx-user.cursorx) > 1) {
-      user.previousx = user.cursorx; // prevent 'jumping'
-    }
-    if(Math.abs(user.previousy-user.cursory) > 1) {
-      user.previousy = user.cursory; // prevent 'jumping'
-    }
-  }
-  collision(direction) {
-    if(this.uid >= this.users.length) {
+    this.users = data.users
+    if(!this.users) {
       return;
     }
-    var x = this.users[this.uid].cursorx + (direction === 'right' ? 1 : (direction === 'left' ? -1 : 0));
-    var y = this.users[this.uid].cursory + (direction === 'down' ? 1 : (direction === 'up' ? -1 : 0));
+    const theUser = data.users[data.uid]
+    if(!theUser) {
+      return
+    }
+    if(theUser.previousx !== theUser.cursorx ||
+        theUser.previousy !== theUser.cursory) {
+      this.field.ensureCentered(theUser);
+    }
+    if(Math.abs(theUser.previousx-theUser.cursorx) > 1) {
+      theUser.previousx = theUser.cursorx; // prevent 'jumping'
+    }
+    if(Math.abs(theUser.previousy-theUser.cursory) > 1) {
+      theUser.previousy = theUser.cursory; // prevent 'jumping'
+    }
+  }
+  collision(direction, user) {
+    var x = user.cursorx + (direction === 'right' ? 1 : (direction === 'left' ? -1 : 0));
+    var y = user.cursory + (direction === 'down' ? 1 : (direction === 'up' ? -1 : 0));
     return (x < 0 || x >= this.maxx || y < 0 || y >= this.maxy || this.field.getFieldToken(x,y) === 0);
   }
   undrawUsers() {
-    this.users.forEach(function(user) {
-      this.field.drawFieldAt(user.cursorx, user.cursory);
-    });
+    if(this.users) {
+      for (const [key, user] of Object.entries(this.users)) {
+        if(user) {
+          this.field.drawFieldAt(user.cursorx, user.cursory);
+        }
+      }
+    }
   }
   drawUsers() {
-    this.users.forEach(function(user) {
-      this.field.drawAt(user.cursorx, user.cursory, 4);
-    });
+    if(this.users) {
+      for (const [key, user] of Object.entries(this.users)) {
+        if(user) {
+          this.field.drawAt(user.cursorx, user.cursory, 4);
+        }
+      }
+    }
   }
   drawAnimation(user, tick) {
-    if(tick%SIZE === 0) {
-      this.field.drawFieldAt(user.previousx, user.previousy);
-      user.previousx = user.cursorx;
-      user.previousy = user.cursory;
-      this.field.drawAt(user.cursorx, user.cursory, 4);
-    } else {
-      this.field.drawInterim(user.previousx, user.previousy, user.cursorx, user.cursory, tick, 4);
+    if(this.users && this.field) {
+      if(tick%SIZE === 0) {
+        this.field.drawFieldAt(user.previousx, user.previousy);
+        user.previousx = user.cursorx;
+        user.previousy = user.cursory;
+        this.field.drawAt(user.cursorx, user.cursory, 4);
+      } else {
+        this.field.drawInterim(user.previousx, user.previousy, user.cursorx, user.cursory, tick, 4);
+      }
     }
   }
   animate(tick) {
-    this.users.forEach(user => this.drawAnimation(user, tick))
+    if(this.users) {
+      for (const [key, user] of Object.entries(this.users)) {
+        this.drawAnimation(user, tick)
+      }
+    }
   }
 
  }

@@ -6,11 +6,11 @@ import State from './state'
 import Server from './server'
 import Handler from './handler'
 
-var theController
+export var theController
 
 export default class Controller {
   constructor(sounds, ctx, squares, accessToken) {
-    console.log('starting controller with accessToken ' + accessToken)
+    console.log('in controller constructor the controller = ', theController)
     theController = this
     this.sounds = sounds
     this.ctx = ctx
@@ -57,6 +57,7 @@ export default class Controller {
   }
   syncSuccess(data) {
     if(data) {
+      console.log('data returned ', data)
       this.state.setState(data)
       if(!this.ticker) {
         this.start()
@@ -167,6 +168,11 @@ export default class Controller {
 
   static internalTick() {
     theController.tick()
+  }
+
+  logoff() {
+    this.server.logoff()
+    this.stop()
   }
 
 }

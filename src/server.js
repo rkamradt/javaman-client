@@ -79,4 +79,26 @@ export default class Server {
       .then(json => this.controller.resetSuccess(json))
       .catch(error => this.controller.error('error getting world from server error = ' + error, 'could not contact server'))
     }
+    logoff() {
+      fetch(process.env.REACT_APP_SERVER_URL + '/api/world/logoff', {
+        headers: {
+          'user-agent': 'Mozilla/4.0 MDN Example',
+          'content-type': 'application/json',
+          authorization: `Bearer ${this.accessToken}`
+        },
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        redirect: 'follow', // manual, *follow, error
+        referrer: 'no-referrer' // *client, no-referrer
+      })
+      .then(function(response) {
+        var contentType = response.headers.get("Content-Type");
+        if(contentType && contentType.includes("application/json")) {
+          return response.json();
+        }
+        throw new TypeError("Oops, we haven't got JSON!");
+      })
+      .then(json => this.controller.stopSuccess(json))
+      .catch(error => this.controller.error('error logging off from server error = ' + error, 'could not contact server'))
+    }
 }
