@@ -14,6 +14,7 @@ export default class Field {
     this.maxy = 0
     this.uid = null
     this.users = {}
+    this.previous = new Map()
     this.theUser = {}
     this.ctx = ctx
     this.squares = squares
@@ -28,6 +29,14 @@ export default class Field {
     this.maxy = this.maxx > 0 ? this.field[0].length : 0;
     this.uid = data.uid
     this.users = data.users;
+    if(this.users) {
+      for (const [key, user] of Object.entries(this.users)) {
+        this.previous.set(key, {
+          'x': user.cursorx,
+          'y': user.cursory
+        })
+      }
+    }
     this.drawField();
   }
   setState(data) {
@@ -46,15 +55,9 @@ export default class Field {
       console.log('no user found')
       return
     }
-    if(this.theUser.previousx !== this.theUser.cursorx ||
-        this.theUser.previousy !== this.theUser.cursory) {
+    if(this.previous.get(this.uid).x !== this.theUser.cursorx ||
+        this.previous.get(this.uid).y !== this.theUser.cursory) {
       this.ensureCentered(this.theUser);
-    }
-    if(Math.abs(this.theUser.previousx-this.theUser.cursorx) > 1) {
-      this.theUser.previousx = this.theUser.cursorx; // prevent 'jumping'
-    }
-    if(Math.abs(this.theUser.previousy-this.theUser.cursory) > 1) {
-      this.theUser.previousy = this.theUser.cursory; // prevent 'jumping'
     }
   }
   ensureCentered(user) {
@@ -105,7 +108,7 @@ export default class Field {
     if(this.users) {
       for (const [key, user] of Object.entries(this.users)) {
         if(user) {
-          this.field.drawAt(user.cursorx, user.cursory, this.field[user.cursorx][user.cursory]);
+          this.drawAt(user.cursorx, user.cursory, this.field[user.cursorx][user.cursory]);
         }
       }
     }
@@ -114,20 +117,23 @@ export default class Field {
     if(this.users) {
       for (const [key, user] of Object.entries(this.users)) {
         if(user) {
-          this.field.drawAt(user.cursorx, user.cursory, 4);
+          this.drawAt(user.cursorx, user.cursory, 4);
         }
       }
     }
   }
   drawAnimation(user, tick) {
     if(user) {
-      if(tick%SQUARESIZE === 0) {
-        this.drawAt(user.previousx, user.previousy, this.field[user.previousx][user.previousy])
-        user.previousx = user.cursorx;
-        user.previousy = user.cursory;
-        this.drawAt(user.cursorx, user.cursory, 4);
+      var p = this.previous.get(user.uid)
+      if(tick%SQUARESIZE === SQUARESIZE-1) {
+        this.drawAt(p.x, p.y, this.field[p.x][p.y])
+        this.drawAt(user.cursorx, user.cursory, 4)
+        this.previous.set(user.uid, {
+          'x': user.cursorx,
+          'y': user.cursory
+        })
       } else {
-        this.drawInterim(user.previousx, user.previousy, user.cursorx, user.cursory, tick, 4);
+        this.drawInterim(p.x, p.y, user.cursorx, user.cursory, tick, 4);
       }
     }
   }

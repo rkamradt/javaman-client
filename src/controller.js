@@ -148,13 +148,11 @@ export default class Controller {
         } else if(this.downdown) {
           nextMove = 'down'
         }
-        if(nextMove) {
-          if(this.field.collision(nextMove)) {
-            nextMove = ''
-            this.sounds.beep()
-          } else {
-            this.sounds.bloop()
-          }
+        if(this.field.collision(nextMove)) {
+          nextMove = ''
+          this.sounds.beep()
+        } else {
+          this.sounds.bloop()
         }
       }
       this.server.sync(nextMove)
