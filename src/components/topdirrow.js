@@ -3,6 +3,7 @@ import Button from './button.js';
 
 class TopDirectionRow extends React.Component {
   render() {
+    console.log("creating top row buttons")
     return (
       <div className='row'>
         <div className='col-sm-4'> </div>

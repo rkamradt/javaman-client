@@ -2,7 +2,7 @@
  * Copyright 2015 randalkamradt.
  *
  */
-import State from './state'
+import Field from './field'
 import Server from './server'
 import Handler from './handler'
 
@@ -15,7 +15,7 @@ export default class Controller {
     this.sounds = sounds
     this.ctx = ctx
     this.squares = squares
-    this.state = new State(sounds, ctx, squares, this)
+    this.field = new Field(ctx, squares, this)
     this.server = new Server(this, accessToken)
     this.handler = new Handler(this)
     var canvas = document.getElementById('canvas')
@@ -35,11 +35,10 @@ export default class Controller {
     this.handler.bindButton(button,'stop')
     button = document.getElementById('startbutton')
     this.handler.bindButton(button,'start')
-
     this.server.createWorld()
   }
   start() {
-    this.ticker = window.setInterval(Controller.internalTick, 2000)
+    this.ticker = window.setInterval(Controller.internalTick, 200)
     window.requestAnimationFrame(Controller.internalStep) // start animation
   }
   stop() {
@@ -48,7 +47,7 @@ export default class Controller {
   }
   beginSuccess(data) {
     if(data) {
-      this.state.setWorldState(data)
+      this.field.setWorld(data)
       this.server.sync()
     }
   }
@@ -58,7 +57,7 @@ export default class Controller {
   syncSuccess(data) {
     if(data) {
       console.log('data returned ', data)
-      this.state.setState(data)
+      this.field.setState(data)
       if(!this.ticker) {
         this.start()
       }
@@ -74,8 +73,10 @@ export default class Controller {
     if(alertMessage) {
       console.log(alertMessage)
     }
+    throw new Error()
   }
   actionStart(command) {
+    console.log('actionStart ' + command)
     this.leftdown = false  // keydown flags are mutually exclusive
     this.rightdown = false
     this.updown = false
@@ -109,6 +110,7 @@ export default class Controller {
     }
   }
   actionStop(command) {
+    console.log('actionStop ' + command)
     switch(command) {
       case 'left':
         this.leftdown = false
@@ -147,7 +149,7 @@ export default class Controller {
           nextMove = 'down'
         }
         if(nextMove) {
-          if(this.state.collision(nextMove)) {
+          if(this.field.collision(nextMove)) {
             nextMove = ''
             this.sounds.beep()
           } else {
@@ -161,7 +163,7 @@ export default class Controller {
   }
   static internalStep(timestamp) {
     if(theController.ticker) { // don't continue animating if the ticker is stopped
-      theController.state.animate(theController.ticks)
+      theController.field.animate(theController.ticks)
       window.requestAnimationFrame(Controller.internalStep)
     }
   }

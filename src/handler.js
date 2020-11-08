@@ -9,6 +9,7 @@ const DOWN = 40;
 
 export default class Handler {
   constructor(controller) {
+    console.log('creating handler')
     this.controller = controller;
   }
   keyUp(e) {
@@ -18,14 +19,17 @@ export default class Handler {
     this.controller.actionStart(this._xlateKey(e.keyCode));
   }
   actionEnd(e, command) {
+    console.log('end command ' + command)
     e.preventDefault();
     this.controller.actionStop(command);
   }
   actionStart(e, command) {
+    console.log('start command ' + command)
     e.preventDefault();
     this.controller.actionStart(command);
   }
   bindButton(button, command) {
+    console.log('in bindButton ' + command)
     button.addEventListener("mousedown", event => this.actionStart(event, command));
     button.addEventListener("touchstart", event => this.actionStart(event, command));
     button.addEventListener("mouseup", event => this.actionEnd(event, command));
@@ -33,6 +37,7 @@ export default class Handler {
 
   }
   _xlateKey(key) {
+    console.log('translating key ' + key)
     var command;
     switch(key) {
       case LEFT:
