@@ -1,4 +1,4 @@
-FROM node:14.5.0-alpine3.12 as build-deps
+FROM node:18-alpine as build-deps
 ARG REACT_APP_AUTH0_DOMAIN
 ARG REACT_APP_AUTH0_CLIENT_ID
 ARG REACT_APP_AUTH0_AUDIENCE
@@ -8,9 +8,9 @@ ENV REACT_APP_AUTH0_CLIENT_ID=$REACT_APP_AUTH0_CLIENT_ID
 ENV REACT_APP_AUTH0_AUDIENCE=$REACT_APP_AUTH0_AUDIENCE
 ENV REACT_APP_SERVER_URL=$REACT_APP_SERVER_URL
 WORKDIR /usr/src/app
-COPY package*.json yarn.lock ./
-RUN yarn
+COPY package*.json ./
+RUN npm ci --legacy-peer-deps
 COPY . ./
-RUN yarn build
+RUN npm run build
 FROM nginx:1.18-alpine
 COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
