@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 import { useController } from './init.js'
 
-export const useAuth = (auth) => {
-  const [authenticated, setAuthenticated] = useState(null)
+export const useAuth = () => {
+  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
   const [accessToken, setAccessToken] = useState(null)
 
   const setAndReturnAccessToken = (accessToken) => {
@@ -12,25 +13,17 @@ export const useAuth = (auth) => {
   }
 
   useEffect(() => {
-    auth.isAuthenticated().then(isAuthenticated => {
-      if (isAuthenticated !== authenticated) {
-        setAuthenticated(isAuthenticated);
-      }
-    })
-  })
-
-  useEffect(() => {
-    if (authenticated) {
+    if (isAuthenticated) {
       setAccessToken(null)
       console.log('getting accessToken')
-      auth.getAccessToken()
+      getAccessTokenSilently()
         .then(setAndReturnAccessToken)
         .then(useController)
         .then(setAccessToken)
     } else {
       setAccessToken(null)
     }
-  }, [authenticated, auth])
+  }, [isAuthenticated, getAccessTokenSilently])
 
-  return authenticated
+  return isAuthenticated
 };

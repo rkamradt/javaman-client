@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@okta/okta-react": "3.0.6",
+    "@auth0/auth0-react": "^2.2.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "5.1.0",

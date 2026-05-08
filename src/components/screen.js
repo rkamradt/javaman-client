@@ -4,22 +4,25 @@ import MiddleDirectionRow from './middirrow';
 import BottomDirectionRow from './botdirrow';
 import ActionRow from './actionrow';
 import Header from './header';
-import { withAuth } from '@okta/okta-react';
+import { useAuth0 } from '@auth0/auth0-react';
 import { useAuth } from './auth';
 import { theController } from '../controller'
 
-const Screen = withAuth(({ auth }) => {
-  const authenticated = useAuth(auth)
+const Screen = () => {
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  const authenticated = useAuth()
   return (
     <div>
       <header>
-        {authenticated !== null && (
+        {isAuthenticated !== undefined && (
           <div>
           <button
-            onClick={() => authenticated ? auth.logout(theController.logoff()) : auth.login()}
+            onClick={() => isAuthenticated
+              ? logout({ logoutParams: { returnTo: window.location.origin } }, theController.logoff())
+              : loginWithRedirect()}
             className="App-link"
           >
-            Log {authenticated ? 'out' : 'in'}
+            Log {isAuthenticated ? 'out' : 'in'}
           </button>
           <div className='container'>
             <Header />
@@ -37,6 +40,6 @@ const Screen = withAuth(({ auth }) => {
       </header>
     </div>
   );
-});
+};
 
 export default Screen;
