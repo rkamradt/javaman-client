@@ -12,5 +12,5 @@ COPY package*.json ./
 RUN npm ci --legacy-peer-deps
 COPY . ./
 RUN npm run build
-FROM nginx:1.18-alpine
+FROM nginx:alpine
 COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
