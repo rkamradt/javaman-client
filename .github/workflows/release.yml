@@ -37,7 +37,7 @@ jobs:
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.tag.outputs.tag }}
           build-args: |
             REACT_APP_AUTH0_DOMAIN=randyk.us.auth0.com
-            REACT_APP_AUTH0_CLIENT_ID=${{ vars.AUTH0_CLIENT_ID }}
+            REACT_APP_AUTH0_CLIENT_ID=${{ secrets.AUTH0_CLIENT_ID }}
             REACT_APP_AUTH0_AUDIENCE=https://api.kamradtfamily.net
             REACT_APP_SERVER_URL=https://api.kamradtfamily.net/javaman
 
