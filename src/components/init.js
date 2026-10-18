@@ -1,7 +1,7 @@
 import soundsFactory from '../sounds'
 import Controller from '../controller'
 
-export const useController = (accessToken) => {
+export const useController = (accessToken, userId) => {
 
   if (accessToken) {
     var sounds = soundsFactory(new (window.AudioContext || window.webkitAudioContext)())
@@ -9,7 +9,7 @@ export const useController = (accessToken) => {
     var squares = document.getElementById('squares')
     canvas.style.display='block'
     var ctx = canvas.getContext('2d')
-    new Controller(sounds, ctx, squares, accessToken)
+    new Controller(sounds, ctx, squares, accessToken, userId)
   }
   return accessToken
 }

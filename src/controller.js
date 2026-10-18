@@ -8,14 +8,14 @@ import Handler from './handler'
 export var theController
 
 export default class Controller {
-  constructor(sounds, ctx, squares, accessToken) {
+  constructor(sounds, ctx, squares, accessToken, userId) {
     console.log('in controller constructor the controller = ', theController)
     theController = this
     this.sounds = sounds
     this.ctx = ctx
     this.squares = squares
     this.field = new Field(ctx, squares, this)
-    this.server = new Server(this, accessToken)
+    this.server = new Server(this, accessToken, userId)
     this.handler = new Handler(this)
     var canvas = document.getElementById('canvas')
     canvas.addEventListener("keydown", this.keyDown)

@@ -7,7 +7,7 @@ export const useAuth = () => {
 
   useEffect(() => {
     if (initialized && keycloak.authenticated && keycloak.token) {
-      useController(keycloak.token)
+      useController(keycloak.token, keycloak.tokenParsed?.sub)
     }
   }, [initialized, keycloak.authenticated, keycloak.token])
 
