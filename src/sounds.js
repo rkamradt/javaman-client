@@ -49,7 +49,7 @@ function makeBloop(audioCtx) {
   return arrayBuffer;
 }
 
-module.exports = function(audioCtx) {
+export default function soundsFactory(audioCtx) {
   var beepArrayBuffer = makeBeep(audioCtx);
   var bloopArrayBuffer = makeBloop(audioCtx);
 
