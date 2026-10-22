@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import TopDirectionRow from './topdirrow'
 import MiddleDirectionRow from './middirrow'
 import BottomDirectionRow from './botdirrow'
@@ -8,9 +8,48 @@ import { useKeycloak } from '../KeycloakContext'
 import { useAuth } from './auth'
 import { theController } from '../controller'
 
+const ARROW_MAP = {
+  ArrowLeft:  'left',
+  ArrowRight: 'right',
+  ArrowUp:    'up',
+  ArrowDown:  'down',
+}
+
+const BUTTON_ID = {
+  left:  'leftbutton',
+  right: 'rightbutton',
+  up:    'upbutton',
+  down:  'downbutton',
+}
+
 const Screen = () => {
   const { keycloak, initialized } = useKeycloak()
   useAuth()
+
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      const cmd = ARROW_MAP[e.key]
+      if (!cmd) return
+      e.preventDefault()
+      const btn = document.getElementById(BUTTON_ID[cmd])
+      if (btn) btn.classList.add('active')
+      if (theController) theController.actionStart(cmd)
+    }
+    const onKeyUp = (e) => {
+      const cmd = ARROW_MAP[e.key]
+      if (!cmd) return
+      e.preventDefault()
+      const btn = document.getElementById(BUTTON_ID[cmd])
+      if (btn) btn.classList.remove('active')
+      if (theController) theController.actionStop(cmd)
+    }
+    document.addEventListener('keydown', onKeyDown)
+    document.addEventListener('keyup', onKeyUp)
+    return () => {
+      document.removeEventListener('keydown', onKeyDown)
+      document.removeEventListener('keyup', onKeyUp)
+    }
+  }, [])
 
   return (
     <div>
