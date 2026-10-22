@@ -1,20 +1,12 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { useKeycloak } from '../KeycloakContext'
-import { useController } from './init.js'
+import { useGameController } from '../useGameController'
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID
 
 export const useAuth = (canvasRef, squaresRef) => {
   const { keycloak, initialized } = useKeycloak()
-  const controllerStarted = useRef(false)
-
-  // Start the game controller once when authenticated
-  useEffect(() => {
-    if (initialized && keycloak.authenticated && keycloak.token && !controllerStarted.current) {
-      controllerStarted.current = true
-      useController(keycloak.token, keycloak.tokenParsed?.sub, canvasRef, squaresRef)
-    }
-  }, [initialized, keycloak.authenticated, keycloak.token])
+  useGameController(keycloak, initialized, canvasRef, squaresRef)
 
   // Initialize Google One Tap when not authenticated
   useEffect(() => {

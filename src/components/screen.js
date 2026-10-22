@@ -59,6 +59,11 @@ const Screen = () => {
       <div className="bat" aria-hidden="true">🦇</div>
       <div className="bat" aria-hidden="true">🦇</div>
       <div className="bat" aria-hidden="true">🦇</div>
+      <div className="pumpkin" aria-hidden="true">🎃</div>
+      <div className="pumpkin" aria-hidden="true">🎃</div>
+      <div className="pumpkin" aria-hidden="true">🎃</div>
+      <div className="pumpkin" aria-hidden="true">🎃</div>
+      <div className="pumpkin" aria-hidden="true">🎃</div>
       <svg className="web-corner tl" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
         <g stroke="#ff6b00" strokeWidth="0.8" fill="none">
           <line x1="0" y1="0" x2="120" y2="0" />

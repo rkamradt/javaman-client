@@ -61,6 +61,32 @@ body::before {
 .bat:nth-child(2) { top: 28%; animation-duration: 18s; animation-delay: 5s; }
 .bat:nth-child(3) { top: 60%; animation-duration: 12s; animation-delay: 9s; }
 
+/* floating pumpkins */
+@keyframes pumpkin-float {
+  0%   { transform: translateY(0px) rotate(-4deg); }
+  50%  { transform: translateY(-14px) rotate(4deg); }
+  100% { transform: translateY(0px) rotate(-4deg); }
+}
+
+@keyframes pumpkin-glow {
+  0%, 100% { text-shadow: 0 0 8px rgba(255,107,0,0.6), 0 0 20px rgba(255,107,0,0.3); }
+  50%       { text-shadow: 0 0 16px rgba(255,107,0,0.9), 0 0 40px rgba(255,107,0,0.5); }
+}
+
+.pumpkin {
+  position: fixed;
+  font-size: 1.8rem;
+  pointer-events: none;
+  z-index: 9996;
+  animation: pumpkin-float ease-in-out infinite, pumpkin-glow ease-in-out infinite;
+}
+
+.pumpkin:nth-child(4) { bottom: 8%;  left: 3%;   animation-duration: 4.2s, 3.1s; animation-delay: 0s,   0.5s; }
+.pumpkin:nth-child(5) { bottom: 12%; right: 4%;  animation-duration: 5.1s, 2.8s; animation-delay: 1.2s, 0s;   }
+.pumpkin:nth-child(6) { bottom: 5%;  left: 48%;  animation-duration: 3.8s, 3.5s; animation-delay: 0.7s, 1.1s; }
+.pumpkin:nth-child(7) { top: 40%;   left: 1%;   animation-duration: 6.0s, 4.0s; animation-delay: 2.0s, 0.3s; }
+.pumpkin:nth-child(8) { top: 35%;   right: 1%;  animation-duration: 4.8s, 3.3s; animation-delay: 0.4s, 1.8s; }
+
 /* spider web corners */
 .web-corner {
   position: fixed;
