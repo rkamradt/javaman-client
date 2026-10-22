@@ -3,68 +3,65 @@
  *
  */
 
-function makeBeep(audioCtx) {
-  var channels = 2;
-  // Create an empty two second stereo buffer at the
-  // sample rate of the AudioContext
-  var frameCount = audioCtx.sampleRate * 0.5;
+let audioCtx = null
 
-  var arrayBuffer = audioCtx.createBuffer(channels, frameCount, audioCtx.sampleRate);
-
-  // Fill the buffer with white noise;
-  //just random values between -1.0 and 1.0
-  for (var channel = 0; channel < channels; channel++) {
-   // This gives us the actual array that contains the data
-   var buffer = arrayBuffer.getChannelData(channel);
-   for (var i = 0; i < frameCount; i++) {
-     // Math.random() is in [0; 1.0]
-     // audio needs to be in [-1.0; 1.0]
-     var amp = (frameCount-i)/frameCount;
-     buffer[i] = Math.random() * 2 * amp - 1;
-   }
+function getCtx() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)()
   }
-  return arrayBuffer;
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume()
+  }
+  return audioCtx
 }
 
-function makeBloop(audioCtx) {
-  var channels = 2;
-  // Create an empty two second stereo buffer at the
-  // sample rate of the AudioContext
-  var frameCount = audioCtx.sampleRate * 0.5;
-
-  var arrayBuffer = audioCtx.createBuffer(channels, frameCount, audioCtx.sampleRate);
-
-  // Fill the buffer with white noise;
-  //just random values between -1.0 and 1.0
-  for (var channel = 0; channel < channels; channel++) {
-   // This gives us the actual array that contains the data
-   var buffer = arrayBuffer.getChannelData(channel);
-   for (var i = 0; i < frameCount; i++) {
-     // Math.random() is in [0; 1.0]
-     // audio needs to be in [-1.0; 1.0]
-     var amp = i/frameCount;
-     buffer[i] = Math.random * 0.33 * amp - 1;
-   }
+function makeBeep(ctx) {
+  const frameCount = ctx.sampleRate * 0.5
+  const buf = ctx.createBuffer(2, frameCount, ctx.sampleRate)
+  for (let ch = 0; ch < 2; ch++) {
+    const data = buf.getChannelData(ch)
+    for (let i = 0; i < frameCount; i++) {
+      const amp = (frameCount - i) / frameCount
+      data[i] = Math.random() * 2 * amp - 1
+    }
   }
-  return arrayBuffer;
+  return buf
 }
 
-export default function soundsFactory(audioCtx) {
-  var beepArrayBuffer = makeBeep(audioCtx);
-  var bloopArrayBuffer = makeBloop(audioCtx);
+function makeBloop(ctx) {
+  const frameCount = ctx.sampleRate * 0.5
+  const buf = ctx.createBuffer(2, frameCount, ctx.sampleRate)
+  for (let ch = 0; ch < 2; ch++) {
+    const data = buf.getChannelData(ch)
+    for (let i = 0; i < frameCount; i++) {
+      const amp = i / frameCount
+      data[i] = Math.random() * 0.33 * amp - 1
+    }
+  }
+  return buf
+}
+
+export default function soundsFactory() {
+  // Buffers are built lazily on first call so AudioContext exists by then
+  let beepBuf = null
+  let bloopBuf = null
 
   return {
-    'beep': function() {
-      var source = audioCtx.createBufferSource();
-      source.buffer = beepArrayBuffer;
-      source.connect(audioCtx.destination);
-      source.start();
+    beep() {
+      const ctx = getCtx()
+      if (!beepBuf) beepBuf = makeBeep(ctx)
+      const src = ctx.createBufferSource()
+      src.buffer = beepBuf
+      src.connect(ctx.destination)
+      src.start()
     },
-    'bloop': function() {
-      var source = audioCtx.createBufferSource();
-      source.buffer = bloopArrayBuffer;
-      source.connect(audioCtx.destination);
-      source.start();
-    }
-  };
-};
+    bloop() {
+      const ctx = getCtx()
+      if (!bloopBuf) bloopBuf = makeBloop(ctx)
+      const src = ctx.createBufferSource()
+      src.buffer = bloopBuf
+      src.connect(ctx.destination)
+      src.start()
+    },
+  }
+}

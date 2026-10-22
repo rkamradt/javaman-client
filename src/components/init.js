@@ -4,7 +4,7 @@ import Controller from '../controller'
 export const useController = (accessToken, userId) => {
 
   if (accessToken) {
-    var sounds = soundsFactory(new (window.AudioContext || window.webkitAudioContext)())
+    var sounds = soundsFactory()
     var canvas = document.getElementById('canvas')
     var squares = document.getElementById('squares')
     canvas.style.display='block'
