@@ -87,6 +87,32 @@ body::before {
 .pumpkin:nth-child(7) { top: 40%;   left: 1%;   animation-duration: 6.0s, 4.0s; animation-delay: 2.0s, 0.3s; }
 .pumpkin:nth-child(8) { top: 35%;   right: 1%;  animation-duration: 4.8s, 3.3s; animation-delay: 0.4s, 1.8s; }
 
+/* falling leaves */
+@keyframes leaf-fall {
+  0%   { transform: translateY(-60px) translateX(0px) rotate(0deg); opacity: 0; }
+  10%  { opacity: 0.85; }
+  25%  { transform: translateY(25vh) translateX(28px) rotate(95deg); }
+  50%  { transform: translateY(50vh) translateX(-18px) rotate(205deg); }
+  75%  { transform: translateY(75vh) translateX(35px) rotate(315deg); }
+  90%  { opacity: 0.85; }
+  100% { transform: translateY(110vh) translateX(8px) rotate(420deg); opacity: 0; }
+}
+
+.leaf {
+  position: fixed;
+  top: -60px;
+  pointer-events: none;
+  z-index: 9995;
+  animation: leaf-fall ease-in-out infinite;
+}
+
+.leaf:nth-child(11) { left:  8%; font-size: 1.0rem; animation-duration: 12s; animation-delay: 0s;   }
+.leaf:nth-child(12) { left: 22%; font-size: 1.3rem; animation-duration: 15s; animation-delay: 3.2s; }
+.leaf:nth-child(13) { left: 40%; font-size: 0.9rem; animation-duration: 11s; animation-delay: 6.5s; }
+.leaf:nth-child(14) { left: 58%; font-size: 1.2rem; animation-duration: 16s; animation-delay: 1.7s; }
+.leaf:nth-child(15) { left: 74%; font-size: 1.0rem; animation-duration: 13s; animation-delay: 8.1s; }
+.leaf:nth-child(16) { left: 88%; font-size: 1.4rem; animation-duration: 14s; animation-delay: 4.4s; }
+
 /* spider web corners */
 .web-corner {
   position: fixed;

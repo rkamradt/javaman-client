@@ -89,6 +89,13 @@ const Screen = () => {
         </g>
       </svg>
 
+      <div className="leaf" aria-hidden="true">🍂</div>
+      <div className="leaf" aria-hidden="true">🍁</div>
+      <div className="leaf" aria-hidden="true">🍂</div>
+      <div className="leaf" aria-hidden="true">🍁</div>
+      <div className="leaf" aria-hidden="true">🍂</div>
+      <div className="leaf" aria-hidden="true">🍁</div>
+
       <div className="app-frame">
         <div className="app-nav">
           <span className="app-nav-title">rkamradt // <span>javaman</span></span>
