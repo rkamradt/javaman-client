@@ -14,31 +14,71 @@ const Screen = () => {
 
   return (
     <div>
-      <header>
-        {initialized && (
-          <div>
+      {/* Halloween decorations */}
+      <div className="bat" aria-hidden="true">🦇</div>
+      <div className="bat" aria-hidden="true">🦇</div>
+      <div className="bat" aria-hidden="true">🦇</div>
+      <svg className="web-corner tl" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="#ff6b00" strokeWidth="0.8" fill="none">
+          <line x1="0" y1="0" x2="120" y2="0" />
+          <line x1="0" y1="0" x2="0" y2="120" />
+          <line x1="0" y1="0" x2="60" y2="120" />
+          <line x1="0" y1="0" x2="120" y2="60" />
+          <path d="M 30 0 Q 15 15 0 30" />
+          <path d="M 60 0 Q 30 30 0 60" />
+          <path d="M 90 0 Q 45 45 0 90" />
+          <path d="M 120 0 Q 60 60 0 120" />
+        </g>
+      </svg>
+      <svg className="web-corner tr" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="#ff6b00" strokeWidth="0.8" fill="none">
+          <line x1="0" y1="0" x2="120" y2="0" />
+          <line x1="0" y1="0" x2="0" y2="120" />
+          <line x1="0" y1="0" x2="60" y2="120" />
+          <line x1="0" y1="0" x2="120" y2="60" />
+          <path d="M 30 0 Q 15 15 0 30" />
+          <path d="M 60 0 Q 30 30 0 60" />
+          <path d="M 90 0 Q 45 45 0 90" />
+          <path d="M 120 0 Q 60 60 0 120" />
+        </g>
+      </svg>
+
+      <div className="app-frame">
+        <div className="app-nav">
+          <span className="app-nav-title">rkamradt // <span>javaman</span></span>
+          {initialized && (
             <button
+              className="btn-auth"
               onClick={() => keycloak.authenticated
                 ? (theController.logoff(), keycloak.logout({ redirectUri: window.location.origin }))
                 : keycloak.login()}
-              className="App-link"
             >
-              Log {keycloak.authenticated ? 'out' : 'in'}
+              {keycloak.authenticated ? 'log out' : 'log in'}
             </button>
-            <div className='container'>
-              <Header />
+          )}
+        </div>
+
+        {initialized && (
+          <div className="game-card">
+            <Header />
+            <div className="game-canvas-wrap">
               <canvas id='canvas' width='240' height='240' />
               <img id='squares' hidden={true} src='img/squares.png' alt=''/>
             </div>
-            <div className='container'>
+            <div className="game-controls">
               <TopDirectionRow />
               <MiddleDirectionRow />
               <BottomDirectionRow />
+              <hr className="ctrl-divider" />
               <ActionRow />
             </div>
           </div>
         )}
-      </header>
+
+        <div className="app-footer">
+          node: kubernetes.default.svc &nbsp;|&nbsp; 🎃 halloween edition
+        </div>
+      </div>
     </div>
   )
 }

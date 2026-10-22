@@ -10,10 +10,17 @@ const LABELS = {
   'play':          '▶',
 }
 
+const ACTION_IDS = ['resetbutton', 'stopbutton', 'startbutton']
+
 class Button extends React.Component {
   render() {
+    const isAction = ACTION_IDS.includes(this.props.buttonId)
     return (
-      <button id={this.props.buttonId} type='button' className='btn btn-secondary'>
+      <button
+        id={this.props.buttonId}
+        type='button'
+        className={isAction ? 'btn-action' : 'btn-ctrl'}
+      >
         {LABELS[this.props.iconName] ?? this.props.iconName}
       </button>
     );

@@ -3,8 +3,9 @@ import React from 'react';
 class Header extends React.Component {
   render() {
     return (
-      <div className='header clearfix'>
-        <h3 className='text-muted'>Java Man</h3>
+      <div className='game-header'>
+        <span className='game-header-icon'>🎃</span>
+        <span className='game-header-label'>java man // <span>halloween</span></span>
       </div>
     );
   }
