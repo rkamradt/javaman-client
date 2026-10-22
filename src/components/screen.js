@@ -46,15 +46,16 @@ const Screen = () => {
       <div className="app-frame">
         <div className="app-nav">
           <span className="app-nav-title">rkamradt // <span>javaman</span></span>
-          {initialized && (
+          {initialized && keycloak.authenticated && (
             <button
               className="btn-auth"
-              onClick={() => keycloak.authenticated
-                ? (theController.logoff(), keycloak.logout({ redirectUri: window.location.origin }))
-                : keycloak.login()}
+              onClick={() => { theController.logoff(); keycloak.logout({ redirectUri: window.location.origin }) }}
             >
-              {keycloak.authenticated ? 'log out' : 'log in'}
+              log out
             </button>
+          )}
+          {initialized && !keycloak.authenticated && (
+            <div id="google-signin-btn" />
           )}
         </div>
 
