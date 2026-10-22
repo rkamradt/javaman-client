@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import TopDirectionRow from './topdirrow'
 import MiddleDirectionRow from './middirrow'
 import BottomDirectionRow from './botdirrow'
@@ -24,7 +24,9 @@ const BUTTON_ID = {
 
 const Screen = () => {
   const { keycloak, initialized } = useKeycloak()
-  useAuth()
+  const canvasRef = useRef(null)
+  const squaresRef = useRef(null)
+  useAuth(canvasRef, squaresRef)
 
   useEffect(() => {
     const onKeyDown = (e) => {
@@ -102,8 +104,8 @@ const Screen = () => {
           <div className="game-card">
             <Header />
             <div className="game-canvas-wrap">
-              <canvas id='canvas' width='240' height='240' />
-              <img id='squares' hidden={true} src='img/squares.png' alt=''/>
+              <canvas ref={canvasRef} width='240' height='240' />
+              <img ref={squaresRef} hidden={true} src='img/squares.png' alt=''/>
             </div>
             <div className="game-controls">
               <TopDirectionRow />

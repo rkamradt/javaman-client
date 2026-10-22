@@ -4,7 +4,7 @@ import { useController } from './init.js'
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID
 
-export const useAuth = () => {
+export const useAuth = (canvasRef, squaresRef) => {
   const { keycloak, initialized } = useKeycloak()
   const controllerStarted = useRef(false)
 
@@ -12,7 +12,7 @@ export const useAuth = () => {
   useEffect(() => {
     if (initialized && keycloak.authenticated && keycloak.token && !controllerStarted.current) {
       controllerStarted.current = true
-      useController(keycloak.token, keycloak.tokenParsed?.sub)
+      useController(keycloak.token, keycloak.tokenParsed?.sub, canvasRef, squaresRef)
     }
   }, [initialized, keycloak.authenticated, keycloak.token])
 

@@ -3,7 +3,6 @@
  */
 import Field from './field'
 import Server from './server'
-import Handler from './handler'
 
 export var theController
 
@@ -16,21 +15,6 @@ export default class Controller {
     this.squares = squares
     this.field = new Field(ctx, squares, this)
     this.server = new Server(this, accessToken, userId)
-    this.handler = new Handler(this)
-    var button = document.getElementById('upbutton')
-    this.handler.bindButton(button, 'up')
-    button = document.getElementById('leftbutton')
-    this.handler.bindButton(button, 'left')
-    button = document.getElementById('rightbutton')
-    this.handler.bindButton(button, 'right')
-    button = document.getElementById('downbutton')
-    this.handler.bindButton(button, 'down')
-    button = document.getElementById('resetbutton')
-    this.handler.bindButton(button, 'reset')
-    button = document.getElementById('stopbutton')
-    this.handler.bindButton(button, 'stop')
-    button = document.getElementById('startbutton')
-    this.handler.bindButton(button, 'start')
     this.server.createWorld()
   }
 

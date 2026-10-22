@@ -1,15 +1,11 @@
 import soundsFactory from '../sounds'
 import Controller from '../controller'
 
-export const useController = (accessToken, userId) => {
-
-  if (accessToken) {
-    var sounds = soundsFactory()
-    var canvas = document.getElementById('canvas')
-    var squares = document.getElementById('squares')
-    canvas.style.display='block'
-    var ctx = canvas.getContext('2d')
-    new Controller(sounds, ctx, squares, accessToken, userId)
+export const useController = (accessToken, userId, canvasRef, squaresRef) => {
+  if (accessToken && canvasRef.current) {
+    const sounds = soundsFactory()
+    const ctx = canvasRef.current.getContext('2d')
+    new Controller(sounds, ctx, squaresRef.current, accessToken, userId)
   }
   return accessToken
 }
